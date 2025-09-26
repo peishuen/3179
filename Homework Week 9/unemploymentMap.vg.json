@@ -1,0 +1,60 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 830,
+  "height": 400,
+  "title": {
+    "text": "Average Unemployment Rate by State in Malaysia (2017–2024)",
+    "dy": 30
+  },
+  "projection": { "type": "mercator"},
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/peishuen/3179/refs/heads/main/Homework%20Week%209/states_graticules.json",
+        "format": { "type": "topojson", "feature": "ne_10m_graticules_1" }
+      },
+      "mark": { "type": "geoshape", "stroke": "#cdced1", "strokeWidth": 0.5, "fill": null }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/peishuen/3179/refs/heads/main/Homework%20Week%209/states_graticules.json",
+        "format": { "type": "topojson", "feature": "ne_10m_admin_1_states_provinces" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.name",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/peishuen/3179/refs/heads/main/Homework%20Week%209/state_unemployment_avg.csv"
+            },
+            "key": "state",
+            "fields": ["u_rate"]
+          }
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 0.6 },
+      "encoding": {
+        "color": {
+          "field": "u_rate",
+          "type": "quantitative",
+          "title": "Unemployment Rate (%)",
+          "scale": { "scheme": "blues" }
+        },
+        "tooltip": [
+          { "field": "properties.name", "title": "State" },
+          { "field": "u_rate", "type": "quantitative", "format": ".2f", "title": "Unemployment Rate (%)" }
+        ]
+      }
+    }
+  ],
+  "config": { 
+    "title": {
+      "anchor": "middle",
+      "fontSize": 18,
+      "baseline": "top",
+      "offset": 5
+    },
+    "view": { "stroke": null }, 
+    "legend": { "orient": "right" } 
+  }
+}
