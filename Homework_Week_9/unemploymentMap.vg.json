@@ -33,6 +33,10 @@
             "key": "state",
             "fields": ["u_rate"]
           }
+        },
+        {
+          "calculate": "format(datum.u_rate, '.1f') + '%'",
+          "as": "u_rate_label"
         }
       ],
       "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 0.6 },
@@ -45,7 +49,7 @@
         },
         "tooltip": [
           { "field": "properties.name", "title": "State" },
-          { "field": "u_rate", "type": "quantitative", "format": ".2f", "title": "Unemployment Rate (%)" }
+          { "field": "u_rate_label", "type": "nominal", "title": "Unemployment Rate" }
         ]
       }
     }
